@@ -10,11 +10,12 @@
 	table then performs the operations on data from the input file. The
 	second  table performs bit manipulations on data from the same input.
 	These manipulations are getbit,setbit,countones, isEven and isPower2.
-	Where set bits changes the bit in a specfied space to one or zero based
-	.Getbit returns the bit at a specified location. Countones returns how
-	many ones are in the binary of a given integer. isEven returns true if
-	an integer is even and false if it is odd. isPower2 returns true if an 
-	integer is a power of 2 and false if not.
+	Where set bits changes the bit in a specfied space to one or zero
+	based.Getbit returns the bit at a specified location. Countones
+	returns howmany ones are in the binary of a given integer. isEven
+	returns true ifan integer is even and false if it is odd.
+	isPower2 returns true if an integer is a power of 2 and 
+	false if not.
 */
 #include <iostream>
 #include <fstream>
@@ -49,14 +50,17 @@ int main() {
 
 	// calling function to open files 
 	openFiles(infile, outfile); 	// gets the amount of data that shall
-                                    // be read in from input file for the first table
+                                    // be read in from input file for the 
+									//first table
 	
-	infile >> t1_inputrows;       // creates the amount of rows that will be in the first table
+	infile >> t1_inputrows;       // creates the amount of rows that will 
+								  //be in the first table
 	
 	t1_rows = (t1_rows + t1_inputrows);
 
 	// creating dynamically allocated 2D array  
-	// where i foound the code to dynamically allocate a 2D array and deallocate it:
+	// where i foound the code to dynamically allocate a 
+	// 2D array and deallocate it:
 	// https://www.geeksforgeeks.org/how-to-declare-a-2d-array-dynamically-in-c-using-new-operator/
 	unsigned short int** Table1 = new unsigned short int* [t1_rows];
 	for (int i = 0; i < t1_rows; i++) {
@@ -65,7 +69,8 @@ int main() {
 	}
 
 	// calling functions to initialize the table then perform operations
-	// and filled the remainder of the table then display the table respectively 
+	// and filled the remainder of the table then display the table
+	//respectively 
 	Populatetable1(Table1, t1_rows, t1_columns, infile);
 	CreateBitwisetable1(Table1, t1_rows, t1_columns);
 	Printtable1(Table1, t1_rows, outfile);
@@ -81,8 +86,8 @@ int main() {
 
 		Table2[i] = new  int[t2_columns];
 	}
-	// functions to initialize, perform operations and place into the table
-	// then display the table.
+	// functions to initialize, perform operations and place into 
+	// the table then display the table.
 	Initilazetable2(Table2, t2_rows, t2_columns);
 	moreBitwiseops(Table2, t2_rows, infile);
 	Printtable2(Table2, t2_rows, outfile);
@@ -108,11 +113,13 @@ void openFiles(ifstream& infile, ofstream& outfile)
 	char inFileName[40]; 	//stores name of the input file
 	char outFileName[40];	// stores the nname of the output file
 
-	cout << "Enter the input file name: "; //prompts for name of input file
+	cout << "Enter the input file name: "; //prompts for name of 
+										   //input file
 	cin >> inFileName;				// recieves name of file
 	infile.open(inFileName); //open input file
 
-	cout << "Enter the output file name: ";  //prompts for name of output file
+	cout << "Enter the output file name: ";  //prompts for name of
+											//output file
 	cin >> outFileName;			//recieves name of output file
 	outfile.open(outFileName);//open out putfile
 }
@@ -131,7 +138,8 @@ void Populatetable1(unsigned short int** a, int row, int column, ifstream& infil
 	// declaring variables
 	int num = 0;
 
-	// hard coding the first two rows and first two colums of the table with 1s and 0s
+	// hard coding the first two rows and first two 
+	// columns of the table with 1s and 0s
 	a[0][0] = 1;
 	a[1][0] = 1;
 	a[2][0] = 0;
@@ -141,10 +149,12 @@ void Populatetable1(unsigned short int** a, int row, int column, ifstream& infil
 	a[1][1] = 0;
 	a[2][1] = 1;
 	a[3][1] = 0;
-	// for loop that goes through the remaining rows and columns
+	// for loop that goes through the remaining rows 
+	// and columns
 	for (int r = 4; r < row; r++) {
 		for (int c = 0; c < 2; c++) {
-			// assigning data from input file into the table
+			// assigning data from input file into 
+			//the table
 			infile >> num; 
 			a[r][c] = num;
 			num = 0;
@@ -153,8 +163,8 @@ void Populatetable1(unsigned short int** a, int row, int column, ifstream& infil
 
 }
 /**
- * Purpose: Performs bitwise operations on unisigned short ints and
- * 			stores in 2D array
+ * Purpose: Performs bitwise operations on unisigned 
+ *			short ints andstores in 2D array
  * 
  * Recieves: a, a 2D array of unsigned short integers, row,
  * 			the amount of rows in the 2D array, column, the 
@@ -165,13 +175,15 @@ void Populatetable1(unsigned short int** a, int row, int column, ifstream& infil
  */
 void CreateBitwisetable1(unsigned short int** a, int row, int column) {
 
-	// for loop that goes through the first 4 rows and all columns other than
-	// the first 2 columsn
+	// for loop that goes through the first 4 rows and
+	//  all columns other that the first 2 columsn
 	for (int r = 0; r < 4; r++) {
 		for (int c = 2; c < column; c++) {
 
-			// switch case that checks the columns of the 2D array to know which 
-			//operations are to be performed and places result in correct space
+			// switch case that checks the columns of 
+			//the 2D array to know which operations are
+			//to be performed and places result in 
+			// correct space
 			switch (c) {
 			case 2:
 				a[r][c] = (a[r][0] & a[r][1]);
@@ -200,9 +212,10 @@ void CreateBitwisetable1(unsigned short int** a, int row, int column) {
 	for (int r = 4; r < row; r++) {
 		for (int c = 2; c < column; c++) {
 
-			//switch case that checks for the columns and based on column
-			//performs approipriate operation and places result in correct
-			//spot
+			//switch case that checks for the columns
+			// and based on column performs approipriate 
+			// operation and places result in correct
+			// spot
 			switch (c) {
 			case 2:
 				a[r][c] = a[r][0] & a[r][1];
@@ -223,10 +236,12 @@ void CreateBitwisetable1(unsigned short int** a, int row, int column) {
 
 }
 /**
- * Purpose: Displays the elements of a 2D array in the form of a table
+ * Purpose: Displays the elements of a 2D array in 
+ *			the form of a table
  * 
- * Recieves: a, a 2D array of unsigned short integers, row,
- * 			the amount of rows in the 2D array and outfile, ofstream 
+ * Recieves: a, a 2D array of unsigned short 
+ *			integers, row, the amount of rows 
+ *			in the 2D array and outfile, ofstream 
  * 			variable passed by reference
  * 
  * Returns: N/A (void function)
@@ -261,8 +276,9 @@ void Printtable1(unsigned short int** a, int row, ofstream& outfile) {
 /**
  * Purpose: Initializing 2D array of ints with -1
  * 
- * Recieves: a, a 2D array  integers, row, the amount of rows in 
- * 			 the 2D array,column, the amount of columns in the 2D array.
+ * Recieves: a, a 2D array  integers, row,
+ *			 the amount of rows in 2D array,column,
+ *			 the amount of columns in the 2D array.
  * 
  * Returns: N/A (void function)
  *
@@ -277,10 +293,12 @@ void Initilazetable2( int** a, int rows, int columns) {
 	}
 }
 /**
- * Purpose: Displays the elements of a 2D array in the form of a table
+ * Purpose: Displays the elements of a 2D array in 
+ *			the form of a table
  * 
- * Recieves: a, a 2D array of integers, row, the amount of rows in the 2D array 
- * 			 and outfile, ofstream variable passed by reference
+ * Recieves: a, a 2D array of integers, row, the
+*			 amount of rows in the 2D array and 
+ *			 outfile, ofstream variable passed by reference
  * 
  * Returns: N/A (void function)
  *
@@ -304,9 +322,9 @@ void Printtable2( int** a, int rows, ofstream& outfile) {
 	// for loop that traverse the rows of the 2D array 
 	for (int r = 0; r < rows; r++) {
 		outfile << "|"; 
-		// if statments that checks if the array space holds -1 and
-		// if it does prints a blank space if not displays the data 
-		// stored
+		// if statments that checks if the array space
+		// holds -1 and if it does prints a blank 
+		// space if not displays the data stored
 		if (a[r][0] == -1) { 
 			outfile << setw(7) << " "<< "|"; 
 		} 
@@ -372,11 +390,12 @@ void Printtable2( int** a, int rows, ofstream& outfile) {
 	}
 }
 /**
- * Purpose: Performs bit manipulations on data stored in a 2D array of 
- * 			ints
+ * Purpose: Performs bit manipulations on data stored 
+ *			in a 2D array of ints
  * 
- * Recieves: a, a 2D array of integers, row, the amount of rows
- * 			 in the 2D array, column, the amount of columns in the 2D array.
+ * Recieves: a, a 2D array of integers, row, the
+ *			 amount of rows in the 2D array, column
+ *			 , the amount of columns in the 2D array.
  * 
  * Returns: N/A (void function)
  *
@@ -399,7 +418,8 @@ void moreBitwiseops(int** a, int rows, ifstream& infile) {
 			a[r][4] = (a[r][0] << 1);
 			break;
 		case 'S':
-		// recieving the position and what the bit is to be changed to 
+		// recieving the position and what the bit is to
+		//be changed to 
 			infile >> a[r][1];
 			infile >> a[r][2];
 			a[r][5] = setbit(a[r][0], a[r][1], a[r][2]);
@@ -423,22 +443,26 @@ void moreBitwiseops(int** a, int rows, ifstream& infile) {
 	}
 }
 /**
- * Purpose: tells you the bit (1 or 0) at a specific position in
- * 			a integer 
+ * Purpose: tells you the bit (1 or 0) at a
+ *		    specific position in a integer 
  * 
- * Recieves: num, the integer that the bits are being searched and n, 
- * 			an integer that indicates the position that will be checked
+ * Recieves: num, the integer that the bits 
+ *			are being searched and n, an integer
+ *			that indicates the position that will
+ *			be checked
  * 
- * Returns: the integer 1 and 0 based on what is found at the pit position
+ * Returns: the integer 1 and 0 based on 
+			what is found at the pit position
  *
  */
 int getbit(int num, int n) {
 	//integer to stor the positin to be checked
 	int power = pow(2, n);
 	int result;
-	// if statement that ands the num with the position and if the result is 
-	// not 0 then the bit position is a 1 if result is 0 the position is 
-	//a 0
+	// if statement that ands the num with 
+	// the position and if the result is not 
+	// 0 then the bit position is a 1 if
+	// result is 0 the position is a 0
 	if ((num & power) != 0) {
 		result = 1;
 	}
@@ -448,11 +472,14 @@ int getbit(int num, int n) {
 	return result;
 }
 /**
- * Purpose: changes the bit located at a specific position in to a value (1 or 0)
- * 			specified by user 
+ * Purpose: changes the bit located at a 
+ *			specific position in to a value
+ *			(1 or 0) specified by user 
  * 		
- * Recieves: num, the integer that the bits are being searched and n, 
- * 			an integer that indicates the position that will be checked, v 
+ * Recieves: num, the integer that the bits 
+ *			are being searched and n, an 
+ *			integer that indicates the position
+ *			that will be checked, v 
  * 			the value that the bit will be changed to
  * 
  * Returns: returns the new integer after changing the bit
@@ -484,7 +511,8 @@ int setbit(int num, int n, int v) {
 int countOnes(int num) {
 	int count = 0;
 	int power;
-	// for loop that will allows you to access every bit position of a num 
+	// for loop that will allows you to access every bit 
+	//position of a num 
 	for (int i = 0; i < 32; i++) {
 		power = pow(2, i);
 		//checks to see if the position is a 1 the increments count
@@ -504,8 +532,9 @@ int countOnes(int num) {
  */
 bool isEven(int num) {
 	int power = pow(2, 0);
-	// if statement that checks if the first position in a num is 1 or 0
-	// if it is a 0 then it returns true if it is a 1 it returns false
+	// if statement that checks if the first position
+	// in a num is 1 or 0  if it is a 0 then it
+	// returns true if it is a 1 it returns false
 	if ((num & power) == 0) {
 		return true;
 	}
